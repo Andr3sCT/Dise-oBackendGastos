@@ -9,11 +9,13 @@ public class LoginResponseDto {
     private String token;
     private String response;
     private String gastos;
+    private String ingresos;
 
-    public LoginResponseDto(String token, String response, String gastos) {
+    public LoginResponseDto(String token, String response, String gastos, String ingresos) {
         this.token = token;
         this.response = response;
         this.gastos = gastos;
+        this.ingresos = ingresos;
     }
 
     public String getResponse() {
@@ -39,5 +41,13 @@ public class LoginResponseDto {
 
     public void setGastos(String gastos) {
         this.gastos = gastos;
+    }
+
+    public String getIngresos() {
+        return ingresos;
+    }
+
+    public void setIngresos(String ingresos) {
+        this.ingresos = ingresos;
     }
 }

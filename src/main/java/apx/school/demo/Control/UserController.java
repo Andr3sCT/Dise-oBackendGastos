@@ -1,7 +1,9 @@
 package apx.school.demo.Control;
 
+import apx.school.demo.Dto.TendenciaDto;
 import apx.school.demo.Dto.UserDto;
 import apx.school.demo.Entity.UserEntity;
+import apx.school.demo.Servicio.TendenciasService;
 import apx.school.demo.Servicio.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private TendenciasService tendenciaService;
+
 
     @GetMapping("/")
     public ResponseEntity<List<UserDto>> findAll(){
@@ -50,5 +56,11 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable("id") String id){
         this.userService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/tendencias/{userId}")
+    public ResponseEntity<List<TendenciaDto>> obtenerTendenciaMensual(@PathVariable String userId) {
+        List<TendenciaDto> tendencias = tendenciaService.calcularTendencias(userId);
+        return ResponseEntity.ok(tendencias);
     }
 }

@@ -37,6 +37,9 @@ public class AuthService {
     private GastoService gastoService;
 
     @Autowired
+    private IngresoService ingresoService;
+
+    @Autowired
     public AuthService(MongoDBRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        JwtService jwtService,
@@ -49,20 +52,40 @@ public class AuthService {
 
     public LoginResponseDto login(final LoginDto request){
         try {
+            System.out.println("Inicio de sesión para usuario: " + request.getEmail());
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                    new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
+            );
 
-            UserDetails user = userRepository.findByEmail(request.getEmail())
+// Aquí hacemos el cast correcto a UserEntity para obtener el ID
+            UserEntity userEntity = (UserEntity) userRepository.findByEmail(request.getEmail())
                     .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado con el email: " + request.getEmail()));
 
-            String token = jwtService.getToken(user);
+            System.out.println("Usuario autenticado, generando token.");
 
-            String userId = ((UserEntity) user).getId();
+// Genera el token
+            String token = jwtService.getToken(userEntity);
 
-            String total = String.valueOf(gastoService.sumaGastoporUserId(userId));
+            System.out.println("Agarrando el ID del usuario");
 
+// Obtiene el userId desde la entidad del usuario autenticado
+            String userId = userEntity.getId();  // Ahora obtienes el ID correctamente
 
-            return new LoginResponseDto(token, "Ha iniciado sesión", total);
+            System.out.println("Generando el total de los gastos");
+            Double totalGastos = gastoService.sumaGastoporUserId(userId);  // Asegúrate de usar el servicio correcto
+            System.out.println("Total gastos: " + totalGastos);
+
+            System.out.println("Generando el total de los ingresos");
+            Double totalIngresos = ingresoService.sumaIngresoporUserId(userId);
+            System.out.println("Total ingresos: " + totalIngresos);
+
+            System.out.println("Usuario autenticado: " + request.getEmail());
+            System.out.println("ID del usuario: " + userId);
+
+// Retorna el response con las sumas calculadas
+            return new LoginResponseDto(token, "Ha iniciado sesión",
+                    String.valueOf(totalGastos != null ? totalGastos : 0),  // Si es null, retorna 0
+                    String.valueOf(totalIngresos != null ? totalIngresos : 0));  // Si es null, retorna 0
 
 
         } catch (UsernameNotFoundException e) {

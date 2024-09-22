@@ -1,6 +1,7 @@
 package apx.school.demo.Dto.auth;
 
 import apx.school.demo.Entity.GastoEntity;
+import apx.school.demo.Entity.IngresoEntity;
 
 import java.util.List;
 
@@ -8,10 +9,12 @@ public class AuthDto {
 
     private String token;
     private List<GastoEntity> gastos;
+    private List<IngresoEntity> ingresos;
 
     public AuthDto(String token) {
         this.token = token;
         this.gastos = gastos;
+        this.ingresos = ingresos;
     }
 
     public String getToken() {
@@ -28,5 +31,13 @@ public class AuthDto {
 
     public void setGastos(List<GastoEntity> gastos) {
         this.gastos = gastos;
+    }
+
+    public List<IngresoEntity> getIngresos() {
+        return ingresos;
+    }
+
+    public void setIngresos(List<IngresoEntity> ingresos) {
+        this.ingresos = ingresos;
     }
 }
