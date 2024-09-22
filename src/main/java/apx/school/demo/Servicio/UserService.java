@@ -19,14 +19,12 @@ public class UserService {
     private MongoDBRepository userMongoRepository;
 
     public List<UserDto> getAll(){
-        // return new ArrayList<UserDto>(list.values());
         return this.userMongoRepository.findAll().stream()
                 .map(this::toDto)
                 .toList();
     }
 
     public UserDto getById(String id){
-        //return list.get(id);
         try{
         return this.userMongoRepository.findById(id)
                 .map(this::toDto)
@@ -55,7 +53,6 @@ public class UserService {
     }
 
     public void delete(String id){
-        //list.remove(id);
         UserEntity entity = this.userMongoRepository.findById(id).orElse(null);
         this.userMongoRepository.delete(entity);
     }

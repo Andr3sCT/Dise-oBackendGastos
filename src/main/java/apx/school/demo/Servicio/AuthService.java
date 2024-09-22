@@ -65,12 +65,6 @@ public class AuthService {
             return new LoginResponseDto(token, "Ha iniciado sesión", total);
 
 
-            //UserEntity userDetails = (UserEntity) user;
-
-            //List<GastoEntity> gastos = gastoService.findGastosByUserId(userDetails.getId());
-            //AuthDto response = new AuthDto(gastos.toString());
-            //return response;
-
         } catch (UsernameNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuario no encontrado", e);
 
