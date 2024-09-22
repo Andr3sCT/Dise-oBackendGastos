@@ -12,7 +12,7 @@ public class GastoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; //Debe ser Long por como genera los IDs el JPA
+    private Long id;
     private String descripcion;
     private double monto;
     private String categoria;

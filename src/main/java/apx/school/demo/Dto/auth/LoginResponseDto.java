@@ -8,11 +8,12 @@ public class LoginResponseDto {
 
     private String token;
     private String response;
-    private List<GastoEntity> gastos;
+    private String gastos;
 
-    public LoginResponseDto(String token, String response) {
+    public LoginResponseDto(String token, String response, String gastos) {
         this.token = token;
         this.response = response;
+        this.gastos = gastos;
     }
 
     public String getResponse() {
@@ -32,11 +33,11 @@ public class LoginResponseDto {
     }
 
 
-    public List<GastoEntity> getGastos() {
+    public String getGastos() {
         return gastos;
     }
 
-    public void setGastos(List<GastoEntity> gastos) {
+    public void setGastos(String gastos) {
         this.gastos = gastos;
     }
 }

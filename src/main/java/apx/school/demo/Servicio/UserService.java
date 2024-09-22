@@ -5,7 +5,9 @@ import apx.school.demo.Entity.UserEntity;
 import apx.school.demo.Repository.Mongo.MongoDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,9 +27,13 @@ public class UserService {
 
     public UserDto getById(String id){
         //return list.get(id);
+        try{
         return this.userMongoRepository.findById(id)
                 .map(this::toDto)
                 .orElse(null);
+    } catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+    }
     }
 
     public UserDto save(UserDto user){

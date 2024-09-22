@@ -4,13 +4,15 @@ import apx.school.demo.Dto.UserDto;
 import apx.school.demo.Entity.UserEntity;
 import apx.school.demo.Servicio.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth/users")
 public class UserController {
 
     @Autowired
@@ -23,8 +25,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> findById(@PathVariable("id") String id){
+    public ResponseEntity<UserDto> findById(@PathVariable("id") String id) {
         UserDto usuario = this.userService.getById(id);
+        if (usuario == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+        }
         return ResponseEntity.ok(usuario);
     }
 

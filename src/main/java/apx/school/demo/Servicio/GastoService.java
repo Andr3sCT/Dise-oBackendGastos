@@ -17,6 +17,10 @@ public class GastoService {
     @Qualifier("sqlRepository")
     private SQLRepository sqlRepository;
 
+    public double sumaGastoporUserId(String userId){
+        return sqlRepository.sumaMontoporUserId(userId);
+    }
+
 
     public GastoEntity saveGasto(GastoEntity gasto) {
         if (gasto.getFecha() == null) {

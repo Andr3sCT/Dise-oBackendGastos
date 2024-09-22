@@ -69,7 +69,7 @@ public class JwtService {
         Date expirationDate = getExpiration(token);
         boolean isExpired = expirationDate.before(new Date());
         System.out.println("Fecha de expiración del token: " + expirationDate);
-        System.out.println("Token está expirado: " + isExpired);
+        System.out.println("El token está expirado: " + isExpired);
         return isExpired;
     }
 }

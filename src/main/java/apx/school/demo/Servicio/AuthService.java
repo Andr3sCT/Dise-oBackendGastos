@@ -57,7 +57,12 @@ public class AuthService {
 
             String token = jwtService.getToken(user);
 
-            return new LoginResponseDto(token, "Ha iniciado sesión");
+            String userId = ((UserEntity) user).getId();
+
+            String total = String.valueOf(gastoService.sumaGastoporUserId(userId));
+
+
+            return new LoginResponseDto(token, "Ha iniciado sesión", total);
 
 
             //UserEntity userDetails = (UserEntity) user;
